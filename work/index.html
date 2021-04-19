@@ -5,22 +5,46 @@
     <meta charset="utf-8">
     <title>Vue TEST</title>
     <!-- Vue.js を読み込む -->
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 
 <body>
-
     <div id="app">{{ message }}<br />
         <button v-on:click="reverseMessage">メッセージ反転</button>
     </div>
+    <div id="app">
+        <img src="img/thumbnail2.png" alt="サムネイル2" class="slideshow" />
+        <img src="img/thumbnail3.png" alt="サムネイル3" class="slideshow fadeout" />
+        <img src="img/thumbnail4.png" alt="サムネイル4" class="slideshow fadeout" />
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
         var app1 = new Vue({//vue.jsを使う宣言を行う
             el: '#app',
-            data: { message: 'Helloworld!' },
+            data: {
+                message: 'Helloworld!', //プロパティの設定を行う
+                index: 0,
+            },
+            mounted() {
+                const images = document.getElementsByClassName('slideshow');
+                //クラス名に slideshow を持つ複数のDOMオブジェクトを取得する。
+                this.slideshow(images);
+                setInterval(() => {
+                    this.index = this.index < images.length - 1 ? this.index + 1 : 0;
+                    this.slideshow(images);
+                }, 3000);
+            },
             methods: {
                 reverseMessage: function () { //上記で設定したreverseMessageの処理を書いていく
-                    this.message = this.message.split('').reverse().join('') 
+                    this.message = this.message.split('').reverse().join('')
                     //"Helloworld!"を分割し反転し再び繋げる
+                },
+                slideshow(images) {　//スライドショー処理
+                    const current = images[this.index];
+                    const prev = images[this.index - 1] ? images[this.index - 1] : images[images.length - 1];
+                    current.classList.add('fadein');
+                    current.classList.remove('fadeout');
+                    prev.classList.remove('fadein');
+                    prev.classList.add('fadeout');
                 }
             }
         })
@@ -29,3 +53,18 @@
 </body>
 
 </html>
+<style>
+    .fadein {
+        opacity: 1;
+        transition: opacity 0.5s;
+    }
+
+    .fadeout {
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .slideshow {
+        position: absolute;
+    }
+</style>
