@@ -24,14 +24,18 @@
                 message: 'Helloworld!', //プロパティの設定を行う
                 index: 0,
             },
-            mounted() {
+            mounted() { //インスタンスがDOM要素にマウントされた後に発動する
                 const images = document.getElementsByClassName('slideshow');
                 //クラス名に slideshow を持つ複数のDOMオブジェクトを取得する。
                 this.slideshow(images);
                 setInterval(() => {
                     this.index = this.index < images.length - 1 ? this.index + 1 : 0;
+                    //slideshow数に−１した数がthis.indexより大きい場合,
+                    //this.index + 1する
                     this.slideshow(images);
+                    //slideshow(images)メソッドの処理を行う
                 }, 3000);
+                //3000ミリ秒ごとに繰り返す
             },
             methods: {
                 reverseMessage: function () { //上記で設定したreverseMessageの処理を書いていく
@@ -40,11 +44,18 @@
                 },
                 slideshow(images) {　//スライドショー処理
                     const current = images[this.index];
+                    //次に表示されるイメージの要素をcurrentにセットする
                     const prev = images[this.index - 1] ? images[this.index - 1] : images[images.length - 1];
                     current.classList.add('fadein');
+                    //fadeinクラスを追加する
+                    //次のイメージが表示される
                     current.classList.remove('fadeout');
+                    //fadeoutクラスを離す
                     prev.classList.remove('fadein');
+                    //fadeinクラスを離す
                     prev.classList.add('fadeout');
+                    //fadeoutクラスを追加する
+                    //既に表示されていたイメージが表示されなくなる
                 }
             }
         })
