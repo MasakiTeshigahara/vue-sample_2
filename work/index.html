@@ -18,44 +18,51 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
-        var app1 = new Vue({//vue.jsを使う宣言を行う
+        //vue.jsを使う宣言を行う
+        var app1 = new Vue({
             el: '#app',
             data: {
-                message: 'Helloworld!', //プロパティの設定を行う
+                //プロパティの設定を行う
+                message: 'Helloworld!',
                 index: 0,
             },
-            mounted() { //インスタンスがDOM要素にマウントされた後に発動する
-                const images = document.getElementsByClassName('slideshow');
+            //インスタンスがDOM要素にマウントされた後に発動する
+            mounted() {
                 //クラス名に slideshow を持つ複数のDOMオブジェクトを取得する。
+                const images = document.getElementsByClassName('slideshow');
                 this.slideshow(images);
                 setInterval(() => {
+                    //次のイメージを表示させるために
+                    //imagesで取得した値から１引いた値が、this.indexより大きい場合,
+                    //indexに１を加える
                     this.index = this.index < images.length - 1 ? this.index + 1 : 0;
-                    //slideshow数に−１した数がthis.indexより大きい場合,
-                    //this.index + 1する
-                    this.slideshow(images);
                     //slideshow(images)メソッドの処理を行う
+                    this.slideshow(images);
+                    //3000ミリ秒ごとに繰り返す
                 }, 3000);
-                //3000ミリ秒ごとに繰り返す
             },
             methods: {
-                reverseMessage: function () { //上記で設定したreverseMessageの処理を書いていく
-                    this.message = this.message.split('').reverse().join('')
+                //上記で設定したreverseMessageの処理を書いていく
+                reverseMessage: function () {
                     //"Helloworld!"を分割し反転し再び繋げる
+                    this.message = this.message.split('').reverse().join('')
                 },
-                slideshow(images) {　//スライドショー処理
-                    const current = images[this.index];
+                //スライドショー処理
+                slideshow(images) {
                     //次に表示されるイメージの要素をcurrentにセットする
+                    const current = images[this.index];
+                    //既に表示されているイメージを取得するために
                     const prev = images[this.index - 1] ? images[this.index - 1] : images[images.length - 1];
-                    current.classList.add('fadein');
                     //fadeinクラスを追加する
                     //次のイメージが表示される
-                    current.classList.remove('fadeout');
+                    current.classList.add('fadein');
                     //fadeoutクラスを離す
-                    prev.classList.remove('fadein');
+                    current.classList.remove('fadeout');
                     //fadeinクラスを離す
-                    prev.classList.add('fadeout');
+                    prev.classList.remove('fadein');
                     //fadeoutクラスを追加する
                     //既に表示されていたイメージが表示されなくなる
+                    prev.classList.add('fadeout');
                 }
             }
         })
