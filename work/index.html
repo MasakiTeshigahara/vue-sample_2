@@ -39,7 +39,7 @@
                     //slideshow(images)メソッドの処理を行う
                     this.slideshow(images);
                     //3000ミリ秒ごとに繰り返す
-                }, 3000);
+                }, 2000);
             },
             methods: {
                 //上記で設定したreverseMessageの処理を書いていく
@@ -72,9 +72,14 @@
 
 </html>
 <style>
+    #app{
+        margin-top: 50px;
+        width: 300px;
+    }
     .fadein {
         opacity: 1;
-        transition: opacity 0.5s;
+        transform: translateX(100px);
+        transition: opacity,transform 1s;
     }
 
     .fadeout {
